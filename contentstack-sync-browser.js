@@ -1,8 +1,8 @@
 const CONTENTSTACK_CONFIG = {
-  api_key: 'blt2c7743a722e0223b',
-  delivery_token: 'cs51043beeb31a36d548378970',
-  environment: 'development',
-  region: 'us'
+  api_key: window.CONTENTSTACK_API_KEY || process.env.CONTENTSTACK_API_KEY || 'blt2c7743a722e0223b',
+  delivery_token: window.CONTENTSTACK_DELIVERY_TOKEN || process.env.CONTENTSTACK_DELIVERY_TOKEN || 'cs51043beeb31a36d548378970',
+  environment: window.CONTENTSTACK_ENVIRONMENT || process.env.CONTENTSTACK_ENVIRONMENT || 'development',
+  region: window.CONTENTSTACK_REGION || process.env.CONTENTSTACK_REGION || 'us'
 };
 
 const API_BASE = 'https://cdn.contentstack.io/v3';

@@ -4,7 +4,19 @@ window.renderNavigationMenu = async function() {
     const navMenu = document.querySelector('.nav-menu');
     
     if (navMenu && navItems && navItems.length > 0) {
-      const navHTML = navItems.map(item => {
+      const seen = new Set();
+      const uniqueItems = navItems.filter(item => {
+        const key = `${item.menu_label}_${item.order}`;
+        if (seen.has(key)) {
+          return false;
+        }
+        seen.add(key);
+        return true;
+      });
+      
+      uniqueItems.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      const navHTML = uniqueItems.map(item => {
         const linkUrl = item.link_url || '#';
         const label = item.menu_label || '';
         return `<li><a href="${linkUrl}">${label}</a></li>`;
@@ -86,7 +98,19 @@ window.renderCompanyLogos = async function() {
     const logosContainer = document.getElementById('company-logos');
     
     if (logosContainer && companies && companies.length > 0) {
-      const logosHTML = companies.map(company => {
+      const seen = new Set();
+      const uniqueCompanies = companies.filter(company => {
+        const name = company.company_name || '';
+        if (seen.has(name)) {
+          return false;
+        }
+        seen.add(name);
+        return true;
+      });
+      
+      uniqueCompanies.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      const logosHTML = uniqueCompanies.map(company => {
         const name = company.company_name || '';
         
         if (company.logo && company.logo.url) {
@@ -111,6 +135,18 @@ window.renderFeatureCards = async function() {
     
     if (featuresGrid) {
       if (features && features.length > 0) {
+      const seen = new Set();
+      const uniqueFeatures = features.filter(feature => {
+        const title = feature.title || '';
+        if (seen.has(title)) {
+          return false;
+        }
+        seen.add(title);
+        return true;
+      });
+      
+      uniqueFeatures.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
       const iconMap = {
         'cms': '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>',
         'personalization': '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
@@ -118,7 +154,7 @@ window.renderFeatureCards = async function() {
         'hosting': '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>'
       };
       
-      const featuresHTML = features.map((feature, index) => {
+      const featuresHTML = uniqueFeatures.map((feature, index) => {
         const title = feature.title || '';
         const description = feature.description || '';
         const iconName = feature.icon_name || 'cms';
@@ -171,7 +207,23 @@ window.renderBlogPosts = async function() {
     
     if (blogGrid) {
       if (posts && posts.length > 0) {
-      const postsHTML = posts.map((post, index) => {
+      const seen = new Set();
+      const uniquePosts = posts.filter(post => {
+        const slug = post.slug || post.title || '';
+        if (seen.has(slug)) {
+          return false;
+        }
+        seen.add(slug);
+        return true;
+      });
+      
+      uniquePosts.sort((a, b) => {
+        const dateA = new Date(a.publish_date || 0);
+        const dateB = new Date(b.publish_date || 0);
+        return dateB - dateA;
+      });
+      
+      const postsHTML = uniquePosts.map((post, index) => {
         const title = post.title || '';
         const description = post.description || '';
         const category = post.category || '';
@@ -250,7 +302,19 @@ window.renderFooter = async function() {
     const footerContent = document.querySelector('.footer-content');
     
     if (footerContent && footerSections && footerSections.length > 0) {
-      const footerHTML = footerSections.map(section => {
+      const seen = new Set();
+      const uniqueSections = footerSections.filter(section => {
+        const sectionTitle = section.section_title || '';
+        if (seen.has(sectionTitle)) {
+          return false;
+        }
+        seen.add(sectionTitle);
+        return true;
+      });
+      
+      uniqueSections.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      const footerHTML = uniqueSections.map(section => {
         const sectionTitle = section.section_title || '';
         const links = section.links || [];
         

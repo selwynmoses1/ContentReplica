@@ -4,9 +4,11 @@
   "description": "ContentStack Blog - Modern content management website with Contentstack integration",
   "main": "index.html",
   "scripts": {
-    "build": "echo 'Static site - no build required'",
+    "build": "node inject-env.js",
+    "prebuild": "echo 'Injecting environment variables...'",
+    "prestart": "npm run build",
     "start": "python3 -m http.server 8000",
-    "serve": "python3 -m http.server 8000"
+    "serve": "npm run build && python3 -m http.server 8000"
   },
   "keywords": [
     "contentstack",
@@ -18,7 +20,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/code-abhay/contentstack.git"
+    "url": "https://github.com/selwynmoses1/ContentstackDemo.git"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3"
   }
 }
-

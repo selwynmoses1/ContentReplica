@@ -51,6 +51,6 @@ venv/
 env/
 ENV/
 
-# Contentstack credentials (if moved to env files)
-# Note: Currently credentials are in contentstack-sync-browser.js
-# Consider moving to environment variables for production
+# Contentstack credentials
+# Credentials are now in .env file (gitignored)
+# Use .env.example as a template
