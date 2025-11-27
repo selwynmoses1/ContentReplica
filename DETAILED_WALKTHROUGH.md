@@ -1,4 +1,4 @@
-# ContentCon Blog - Detailed Project Walkthrough
+# ContentStack Blog - Detailed Project Walkthrough
 
 ## 📋 Table of Contents
 1. [Project Overview](#project-overview)
@@ -14,7 +14,7 @@
 
 ## 🎯 Project Overview
 
-**ContentCon Blog** is a production-ready demonstration of a **headless CMS architecture** that separates content management from presentation. The project showcases:
+**ContentStack Blog** is a production-ready demonstration of a **headless CMS architecture** that separates content management from presentation. The project showcases:
 
 - **100% Dynamic Content**: All content is fetched from Contentstack CMS via REST API
 - **Real-time Sync Capability**: Built-in change detection (currently disabled, manual refresh available)
@@ -188,8 +188,8 @@
 1. **Configuration** (lines 9-14):
    ```javascript
    const CONTENTSTACK_CONFIG = {
-     api_key: 'blt89c08d1b12ee2e55',
-     delivery_token: 'csc2289f1a773e5c0e89bfe2f1',
+     api_key: 'blt2c7743a722e0223b',
+     delivery_token: 'csc495c21e306b40b500911f58',
      environment: 'production',
      region: 'us'
    };
@@ -584,7 +584,7 @@ node contentstack/import-blog-posts.js
 **Purpose**: Project metadata and scripts
 
 **Key Fields**:
-- `name`: "contentcon-blog"
+- `name`: "contentstack-blog"
 - `version`: "1.0.0"
 - `scripts`:
   - `build`: Echo command (required by Contentstack Launch)

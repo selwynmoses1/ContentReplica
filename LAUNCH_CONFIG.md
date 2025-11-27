@@ -24,8 +24,8 @@ No `.env` file needed! The sync is configured directly in `contentstack-sync-bro
 
 ```javascript
 const CONTENTSTACK_CONFIG = {
-  api_key: 'blt89c08d1b12ee2e55',
-  delivery_token: 'csc2289f1a773e5c0e89bfe2f1',
+  api_key: 'blt2c7743a722e0223b',
+  delivery_token: 'csc495c21e306b40b500911f58',
   environment: 'production',
   region: 'us'
 };

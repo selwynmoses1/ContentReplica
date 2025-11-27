@@ -6,17 +6,21 @@
 
 // Configuration - These will be used by Contentstack Launch
 // Contentstack Launch automatically injects these at build time if using environment variables
+// 
+// IMPORTANT: delivery_token must be a DELIVERY TOKEN (not Management Token)
+// Get your Delivery Token from: Contentstack → Settings → Stack → Tokens → Delivery Tokens
+// Management Token is for creating/updating content, Delivery Token is for reading content
 const CONTENTSTACK_CONFIG = {
-  api_key: 'blt89c08d1b12ee2e55',
-  delivery_token: 'csc2289f1a773e5c0e89bfe2f1',
-  environment: 'production',
+  api_key: 'blt2c7743a722e0223b',
+  delivery_token: 'cs51043beeb31a36d548378970',
+  environment: 'development',
   region: 'us'
 };
 
 // For Contentstack Launch, these can also be set via environment variables:
-// api_key: process.env.CONTENTSTACK_API_KEY || 'blt89c08d1b12ee2e55',
-// delivery_token: process.env.CONTENTSTACK_DELIVERY_TOKEN || 'csc2289f1a773e5c0e89bfe2f1',
-// environment: process.env.CONTENTSTACK_ENVIRONMENT || 'production',
+// api_key: process.env.CONTENTSTACK_API_KEY || 'blt2c7743a722e0223b',
+// delivery_token: process.env.CONTENTSTACK_DELIVERY_TOKEN || 'cs51043beeb31a36d548378970',
+// environment: process.env.CONTENTSTACK_ENVIRONMENT || 'development',
 
 const API_BASE = 'https://cdn.contentstack.io/v3';
 
@@ -105,8 +109,24 @@ window.getNavigationMenu = async function(skipCache = false) {
 
 /**
  * Fetch Hero Section
+ * Optionally fetch by specific UID
  */
-window.getHeroSection = async function(skipCache = false) {
+window.getHeroSection = async function(skipCache = false, entryUid = null) {
+  // If specific UID is provided, fetch that entry directly
+  if (entryUid) {
+    try {
+      const url = `${API_BASE}/content_types/hero_section/entries/${entryUid}?api_key=${CONTENTSTACK_CONFIG.api_key}&access_token=${CONTENTSTACK_CONFIG.delivery_token}&environment=${CONTENTSTACK_CONFIG.environment}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const result = await response.json();
+        return result.entry || null;
+      }
+    } catch (error) {
+      console.error('Error fetching hero by UID:', error);
+    }
+  }
+  
+  // Otherwise, fetch first entry (default behavior)
   const result = await fetchFromContentstack('hero_section', { limit: 1 }, skipCache);
   return result && result[0] ? result[0] : null;
 };

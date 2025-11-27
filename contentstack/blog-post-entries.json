@@ -7,7 +7,7 @@
         "slug": "ultimate-guide-headless-cms",
         "category": "E-BOOK",
         "description": "Everything you need to know about headless content management systems and how they can transform your digital strategy.",
-        "author": "ContentCon Team",
+        "author": "ContentStack Team",
         "publish_date": "2024-01-15",
         "order": 1
       }
@@ -19,7 +19,7 @@
         "slug": "first-party-data-activation-guide",
         "category": "REPORT",
         "description": "Learn how to leverage first-party data effectively to create personalized experiences that drive engagement and conversions.",
-        "author": "ContentCon Team",
+        "author": "ContentStack Team",
         "publish_date": "2024-01-10",
         "order": 2
       }
@@ -31,7 +31,7 @@
         "slug": "digital-experience-platform-landscape",
         "category": "REPORT",
         "description": "An in-depth analysis of the current DXP market and what to consider when choosing your next platform.",
-        "author": "ContentCon Team",
+        "author": "ContentStack Team",
         "publish_date": "2024-01-05",
         "order": 3
       }

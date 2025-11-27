@@ -1,7 +1,7 @@
 {
-  "name": "contentcon-blog",
+  "name": "contentstack-blog",
   "version": "1.0.0",
-  "description": "ContentCon Blog - Modern content management website with Contentstack integration",
+  "description": "ContentStack Blog - Modern content management website with Contentstack integration",
   "main": "index.html",
   "scripts": {
     "build": "echo 'Static site - no build required'",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/code-abhay/contentcon.git"
+    "url": "https://github.com/code-abhay/contentstack.git"
   }
 }
 

@@ -27,9 +27,10 @@ window.renderNavigationMenu = async function() {
 /**
  * Render Hero Section
  */
-window.renderHeroSection = async function() {
+window.renderHeroSection = async function(entryUid = null) {
   try {
-    const hero = await window.getHeroSection();
+    // If entryUid is provided, fetch that specific entry, otherwise get first entry
+    const hero = await window.getHeroSection(false, entryUid);
     const heroContent = document.querySelector('.hero-content');
     
     if (heroContent && hero) {

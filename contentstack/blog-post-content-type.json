@@ -156,7 +156,7 @@
       "url_pattern": "/blog/:slug",
       "url_prefix": "/blog/"
     },
-    "description": "Blog post content type for ContentCon Blog"
+    "description": "Blog post content type for ContentStack Blog"
   }
 }
 

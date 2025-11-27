@@ -14,9 +14,9 @@ const path = require('path');
 
 // Contentstack Configuration
 const CONFIG = {
-  management_token: process.env.CONTENTSTACK_MANAGEMENT_TOKEN || 'cse8685604d444842a58776998',
-  api_key: process.env.CONTENTSTACK_API_KEY || 'blt89c08d1b12ee2e55',
-  region: process.env.CONTENTSTACK_REGION || 'na'
+  management_token: process.env.CONTENTSTACK_MANAGEMENT_TOKEN || 'csc495c21e306b40b500911f58',
+  api_key: process.env.CONTENTSTACK_API_KEY || 'blt2c7743a722e0223b',
+  region: process.env.CONTENTSTACK_REGION || 'us'
 };
 
 const API_BASE = `https://api.contentstack.io/v3`;

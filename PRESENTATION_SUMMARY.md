@@ -1,8 +1,8 @@
-# ContentCon Blog - Presentation Summary
+# ContentStack Blog - Presentation Summary
 
 ## 🎯 Quick Overview
 
-**ContentCon Blog** is a headless CMS-powered website demonstrating real-time content synchronization between Contentstack and a static website.
+**ContentStack Blog** is a headless CMS-powered website demonstrating real-time content synchronization between Contentstack and a static website.
 
 ---
 

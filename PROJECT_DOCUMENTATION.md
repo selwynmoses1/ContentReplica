@@ -1,4 +1,4 @@
-# ContentCon Blog - Project Documentation & Presentation Guide
+# ContentStack Blog - Project Documentation & Presentation Guide
 
 ## 📋 Table of Contents
 1. [Project Overview](#project-overview)
@@ -13,7 +13,7 @@
 
 ## 🎯 Project Overview
 
-**ContentCon Blog** is a modern, headless CMS-powered blog website that demonstrates real-time content synchronization between Contentstack CMS and a static website. The project showcases:
+**ContentStack Blog** is a modern, headless CMS-powered blog website that demonstrates real-time content synchronization between Contentstack CMS and a static website. The project showcases:
 
 - **Headless CMS Architecture**: Content management separated from presentation
 - **Live Content Sync**: Automatic content updates (currently disabled, manual refresh available)
@@ -113,8 +113,8 @@
 1. **Configuration**:
    ```javascript
    CONTENTSTACK_CONFIG = {
-     api_key: 'blt89c08d1b12ee2e55',
-     delivery_token: 'csc2289f1a773e5c0e89bfe2f1',
+     api_key: 'blt2c7743a722e0223b',
+     delivery_token: 'csc495c21e306b40b500911f58',
      environment: 'production',
      region: 'us'
    }
@@ -731,7 +731,7 @@ await window.getHeroSection()
 
 ## 📝 Summary
 
-**ContentCon Blog** is a production-ready demonstration of:
+**ContentStack Blog** is a production-ready demonstration of:
 - Headless CMS architecture
 - REST API integration
 - Dynamic content rendering
