@@ -1,11 +1,3 @@
-/**
- * Modal/Detail View Functions
- * Handles showing full details when clicking on blog cards or banners
- */
-
-/**
- * Show blog post details from encoded string
- */
 window.showBlogDetailsFromEncoded = function(encodedData) {
   try {
     const post = JSON.parse(decodeURIComponent(encodedData));
@@ -15,14 +7,10 @@ window.showBlogDetailsFromEncoded = function(encodedData) {
   }
 };
 
-/**
- * Show blog post details in modal
- */
 window.showBlogDetails = function(post) {
   const modal = document.getElementById('detail-modal');
   if (!modal) return;
   
-  // Populate modal with post data
   const titleEl = document.getElementById('modal-title');
   const categoryEl = document.getElementById('modal-category');
   const authorEl = document.getElementById('modal-author');
@@ -46,7 +34,6 @@ window.showBlogDetails = function(post) {
     }) : '';
   }
   
-  // Handle image
   if (imageEl && post.featured_image && post.featured_image.url) {
     imageEl.src = post.featured_image.url;
     imageEl.alt = post.title || '';
@@ -55,24 +42,19 @@ window.showBlogDetails = function(post) {
     imageEl.style.display = 'none';
   }
   
-  // Description
   if (descriptionEl) descriptionEl.textContent = post.description || '';
   
-  // Full content
   if (contentEl) {
     if (post.content) {
-      // Handle JSON RTE content or plain HTML
       if (typeof post.content === 'string') {
         try {
           const contentObj = JSON.parse(post.content);
           if (contentObj && contentObj.children) {
-            // Render JSON RTE content
             contentEl.innerHTML = renderJSONRTE(contentObj);
           } else {
             contentEl.innerHTML = post.content;
           }
         } catch (e) {
-          // Plain HTML
           contentEl.innerHTML = post.content;
         }
       } else if (post.content && typeof post.content === 'object') {
@@ -85,14 +67,10 @@ window.showBlogDetails = function(post) {
     }
   }
   
-  // Show modal
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 };
 
-/**
- * Close modal
- */
 window.closeModal = function() {
   const modal = document.getElementById('detail-modal');
   if (modal) {
@@ -101,9 +79,6 @@ window.closeModal = function() {
   }
 };
 
-/**
- * Render JSON RTE content
- */
 function renderJSONRTE(content) {
   if (!content || !content.children) return '';
   
@@ -138,7 +113,6 @@ function renderJSONRTE(content) {
   return html || '<p>Content is being processed...</p>';
 }
 
-// Close modal on overlay click
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('detail-modal');
   if (modal) {
@@ -149,11 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal();
     }
   });
 });
-

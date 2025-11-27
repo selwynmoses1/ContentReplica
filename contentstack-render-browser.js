@@ -1,11 +1,3 @@
-/**
- * Contentstack Render Functions - Browser Version
- * Renders Contentstack content into the HTML page
- */
-
-/**
- * Render Navigation Menu
- */
 window.renderNavigationMenu = async function() {
   try {
     const navItems = await window.getNavigationMenu();
@@ -24,12 +16,8 @@ window.renderNavigationMenu = async function() {
   }
 };
 
-/**
- * Render Hero Section
- */
 window.renderHeroSection = async function(entryUid = null) {
   try {
-    // If entryUid is provided, fetch that specific entry, otherwise get first entry
     const hero = await window.getHeroSection(false, entryUid);
     const heroContent = document.querySelector('.hero-content');
     
@@ -38,23 +26,18 @@ window.renderHeroSection = async function(entryUid = null) {
       const gradientTitle = hero.gradient_title || '';
       const subtitle = hero.subtitle || '';
       
-      // If gradient_title is provided and exists in title, extract it
-      // Otherwise use title as-is and append gradient_title
       let titlePart1 = title;
       let titlePart2 = '';
       
       if (gradientTitle) {
-        // Check if gradientTitle is already part of the title
         const titleLower = title.toLowerCase();
         const gradientLower = gradientTitle.toLowerCase();
         
         if (titleLower.includes(gradientLower)) {
-          // Extract the part before gradient text
           const index = titleLower.indexOf(gradientLower);
           titlePart1 = title.substring(0, index).trim();
           titlePart2 = gradientTitle;
         } else {
-          // Gradient text is separate, use title as-is and append gradient
           titlePart2 = gradientTitle;
         }
       }
@@ -88,7 +71,6 @@ window.renderHeroSection = async function(entryUid = null) {
       `;
       heroContent.innerHTML = heroHTML;
       
-      // Render company logos if badge exists
       if (hero.badge_label) {
         await window.renderCompanyLogos();
       }
@@ -98,9 +80,6 @@ window.renderHeroSection = async function(entryUid = null) {
   }
 };
 
-/**
- * Render Company Logos
- */
 window.renderCompanyLogos = async function() {
   try {
     const companies = await window.getCompanyLogos();
@@ -123,15 +102,12 @@ window.renderCompanyLogos = async function() {
   }
 };
 
-/**
- * Render Feature Cards
- */
 window.renderFeatureCards = async function() {
   try {
     const features = await window.getFeatureCards();
     const featuresGrid = document.getElementById('features-grid') || document.querySelector('.features-grid');
     
-    console.log('🎨 Rendering feature cards:', features?.length || 0, 'cards found');
+    console.log('Rendering feature cards:', features?.length || 0, 'cards found');
     
     if (featuresGrid) {
       if (features && features.length > 0) {
@@ -168,34 +144,30 @@ window.renderFeatureCards = async function() {
       }).join('');
       featuresGrid.innerHTML = featuresHTML;
       
-      // Re-initialize carousel after content is rendered
       if (window.initCarousel) {
         setTimeout(() => {
           window.initCarousel();
         }, 100);
       }
       } else {
-        console.warn('⚠️ No feature cards found in Contentstack');
+        console.warn('No feature cards found in Contentstack');
         featuresGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No feature cards available</p>';
       }
     } else {
-      console.error('❌ Features grid element not found in DOM');
+      console.error('Features grid element not found in DOM');
     }
   } catch (error) {
-    console.error('❌ Error rendering feature cards:', error);
+    console.error('Error rendering feature cards:', error);
     console.error('Stack trace:', error.stack);
   }
 };
 
-/**
- * Render Blog Posts
- */
 window.renderBlogPosts = async function() {
   try {
-    const posts = await window.getBlogPosts(100); // Get all posts for carousel
+    const posts = await window.getBlogPosts(100);
     const blogGrid = document.getElementById('blog-grid') || document.querySelector('.blog-grid');
     
-    console.log('🎨 Rendering blog posts:', posts?.length || 0, 'posts found');
+    console.log('Rendering blog posts:', posts?.length || 0, 'posts found');
     
     if (blogGrid) {
       if (posts && posts.length > 0) {
@@ -211,7 +183,6 @@ window.renderBlogPosts = async function() {
         
         const delayClass = index > 0 ? `delay-${index}` : '';
         
-        // Store full post data for modal - escape properly
         const postData = encodeURIComponent(JSON.stringify(post));
         
         return `
@@ -230,28 +201,24 @@ window.renderBlogPosts = async function() {
       }).join('');
       blogGrid.innerHTML = postsHTML;
       
-      // Re-initialize blog carousel after content is rendered
       if (window.initBlogCarousel) {
         setTimeout(() => {
           window.initBlogCarousel();
         }, 100);
       }
       } else {
-        console.warn('⚠️ No blog posts found in Contentstack');
+        console.warn('No blog posts found in Contentstack');
         blogGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No blog posts available</p>';
       }
     } else {
-      console.error('❌ Blog grid element not found in DOM');
+      console.error('Blog grid element not found in DOM');
     }
   } catch (error) {
-    console.error('❌ Error rendering blog posts:', error);
+    console.error('Error rendering blog posts:', error);
     console.error('Stack trace:', error.stack);
   }
 };
 
-/**
- * Render CTA Section
- */
 window.renderCTASection = async function() {
   try {
     const cta = await window.getCTASection();
@@ -277,9 +244,6 @@ window.renderCTASection = async function() {
   }
 };
 
-/**
- * Render Footer Sections
- */
 window.renderFooter = async function() {
   try {
     const footerSections = await window.getFooterSections();
@@ -310,14 +274,10 @@ window.renderFooter = async function() {
   }
 };
 
-/**
- * Render all content
- */
 window.renderAllContent = async function(forceRefresh = false) {
-  console.log('🔄 Rendering content from Contentstack...');
+  console.log('Rendering content from Contentstack...');
   
   try {
-    // Clear cache if force refresh
     if (forceRefresh && window.contentCache) {
       window.contentCache.clear();
     }
@@ -331,29 +291,24 @@ window.renderAllContent = async function(forceRefresh = false) {
       window.renderFooter()
     ]);
     
-    console.log('✅ Content rendered successfully from Contentstack!');
-    console.log('💡 Tip: Publish changes in Contentstack and they will appear automatically!');
-    console.log('💡 To force refresh, run: window.forceRefresh()');
+    console.log('Content rendered successfully from Contentstack!');
+    console.log('Tip: Publish changes in Contentstack and they will appear automatically!');
+    console.log('To force refresh, run: window.forceRefresh()');
   } catch (error) {
-    console.error('❌ Error rendering content:', error);
+    console.error('Error rendering content:', error);
   }
 };
 
-// Auto-render when DOM is ready
-// Also re-check periodically to ensure content is always fresh
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     window.renderAllContent();
-    // Re-render every 15 seconds to catch any missed updates
     setInterval(() => {
-      window.renderAllContent(true); // Force refresh
+      window.renderAllContent(true);
     }, 15000);
   });
 } else {
   window.renderAllContent();
-  // Re-render every 15 seconds to catch any missed updates
   setInterval(() => {
-    window.renderAllContent(true); // Force refresh
+    window.renderAllContent(true);
   }, 15000);
 }
-

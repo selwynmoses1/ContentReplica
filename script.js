@@ -1,6 +1,3 @@
-// ============================================
-// SCROLL ANIMATIONS
-// ============================================
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -16,7 +13,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe all animated elements
 document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in');
     animatedElements.forEach(el => {
@@ -24,9 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ============================================
-// HEADER SCROLL EFFECT
-// ============================================
 const header = document.querySelector('.header');
 let lastScroll = 0;
 
@@ -42,9 +35,6 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// ============================================
-// MOBILE MENU TOGGLE
-// ============================================
 const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -55,9 +45,6 @@ if (mobileMenuToggle) {
     });
 }
 
-// ============================================
-// SMOOTH SCROLL FOR ANCHOR LINKS
-// ============================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -75,9 +62,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ============================================
-// PARALLAX EFFECT FOR HERO VISUAL
-// ============================================
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const cards = document.querySelectorAll('.floating-card');
@@ -89,9 +73,6 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// ============================================
-// BUTTON HOVER EFFECTS
-// ============================================
 document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
     button.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-2px)';
@@ -102,9 +83,6 @@ document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
     });
 });
 
-// ============================================
-// CARD HOVER ENHANCEMENT
-// ============================================
 document.querySelectorAll('.feature-card, .blog-card').forEach(card => {
     card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-8px) scale(1.02)';
@@ -115,13 +93,9 @@ document.querySelectorAll('.feature-card, .blog-card').forEach(card => {
     });
 });
 
-// ============================================
-// LOADING ANIMATION
-// ============================================
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
     
-    // Trigger initial animations
     const heroElements = document.querySelectorAll('.hero .fade-in-up');
     heroElements.forEach((el, index) => {
         setTimeout(() => {
@@ -131,10 +105,6 @@ window.addEventListener('load', () => {
     });
 });
 
-// ============================================
-// ADDITIONAL SMOOTH INTERACTIONS
-// ============================================
-// Add ripple effect to buttons
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', function(e) {
         const ripple = document.createElement('span');
@@ -155,4 +125,3 @@ document.querySelectorAll('button').forEach(button => {
         }, 600);
     });
 });
-

@@ -1,16 +1,6 @@
-/**
- * Import All Content Types and Entries to Contentstack
- * 
- * This script creates all content types and entries for the ContentStack Blog project
- * Based on Contentstack website: https://www.contentstack.com/
- * 
- * Usage: node import-all-content.js
- */
-
 const fs = require('fs');
 const path = require('path');
 
-// Contentstack Configuration
 const CONFIG = {
   management_token: process.env.CONTENTSTACK_MANAGEMENT_TOKEN || 'csc495c21e306b40b500911f58',
   api_key: process.env.CONTENTSTACK_API_KEY || 'blt2c7743a722e0223b',
@@ -19,7 +9,6 @@ const CONFIG = {
 
 const API_BASE = `https://api.contentstack.io/v3`;
 
-// Helper function to make API requests
 async function makeRequest(url, method = 'GET', body = null, headers = {}) {
   const defaultHeaders = {
     'api_key': CONFIG.api_key,
@@ -47,33 +36,32 @@ async function makeRequest(url, method = 'GET', body = null, headers = {}) {
 
     return data;
   } catch (error) {
-    console.error(`❌ Request failed:`, error.message);
+    console.error(`Request failed:`, error.message);
     throw error;
   }
 }
 
-// Create Content Type
 async function createContentType(contentTypeDefinition) {
   const contentTypeUid = contentTypeDefinition.content_type.uid;
-  console.log(`📝 Creating ${contentTypeUid} content type...`);
+  console.log(`Creating ${contentTypeUid} content type...`);
   
   const url = `${API_BASE}/content_types`;
   const payload = { content_type: contentTypeDefinition.content_type };
   
   try {
     const result = await makeRequest(url, 'POST', payload);
-    console.log(`✅ Content type ${contentTypeUid} created successfully!`);
+    console.log(`Content type ${contentTypeUid} created successfully!`);
     return result.content_type;
   } catch (error) {
     if (error.message.includes('already exists') || error.message.includes('422')) {
-      console.log(`⚠️  Content type ${contentTypeUid} might already exist, skipping...`);
+      console.log(`Content type ${contentTypeUid} might already exist, skipping...`);
       try {
         const getUrl = `${API_BASE}/content_types/${contentTypeUid}`;
         const existing = await makeRequest(getUrl);
-        console.log(`✅ Content type ${contentTypeUid} already exists`);
+        console.log(`Content type ${contentTypeUid} already exists`);
         return existing.content_type;
       } catch (getError) {
-        console.error(`❌ Could not retrieve existing content type:`, getError.message);
+        console.error(`Could not retrieve existing content type:`, getError.message);
         throw error;
       }
     }
@@ -81,7 +69,6 @@ async function createContentType(contentTypeDefinition) {
   }
 }
 
-// Create Entry
 async function createEntry(contentTypeUid, entryData) {
   const url = `${API_BASE}/content_types/${contentTypeUid}/entries`;
   const payload = { entry: entryData };
@@ -91,19 +78,18 @@ async function createEntry(contentTypeUid, entryData) {
     return result.entry;
   } catch (error) {
     if (error.message.includes('already exists') || error.message.includes('422')) {
-      console.log(`⚠️  Entry might already exist, skipping...`);
+      console.log(`Entry might already exist, skipping...`);
       return null;
     }
     throw error;
   }
 }
 
-// Publish Entry
 async function publishEntry(contentTypeUid, entryUid) {
   const url = `${API_BASE}/content_types/${contentTypeUid}/entries/${entryUid}/publish`;
   const payload = {
     entry: {
-      environments: ['production'],
+      environments: ['development'],
       locales: ['en-us']
     }
   };
@@ -112,12 +98,11 @@ async function publishEntry(contentTypeUid, entryUid) {
     await makeRequest(url, 'POST', payload);
     return true;
   } catch (error) {
-    console.error(`❌ Failed to publish entry ${entryUid}:`, error.message);
+    console.error(`Failed to publish entry ${entryUid}:`, error.message);
     return false;
   }
 }
 
-// Content Type Definitions
 const contentTypes = {
   navigation_menu: {
     content_type: {
@@ -439,7 +424,6 @@ const contentTypes = {
   blog_post: JSON.parse(fs.readFileSync(path.join(__dirname, 'blog-post-content-type.json'), 'utf8'))
 };
 
-// Entry Data based on Contentstack website
 const entriesData = {
   navigation_menu: [
     { menu_label: "Platform", link_url: "#platform", order: 1 },
@@ -654,10 +638,9 @@ const entriesData = {
   ]
 };
 
-// Main execution
 async function main() {
-  console.log('🚀 Starting comprehensive content import...\n');
-  console.log(`📋 Configuration:`);
+  console.log('Starting comprehensive content import...\n');
+  console.log(`Configuration:`);
   console.log(`   API Key: ${CONFIG.api_key}`);
   console.log(`   Management Token: ${CONFIG.management_token.substring(0, 10)}...`);
   console.log(`   Region: ${CONFIG.region}\n`);
@@ -666,21 +649,18 @@ async function main() {
   const createdEntries = {};
 
   try {
-    // Step 1: Create all content types
-    console.log('📝 Step 1: Creating content types...\n');
+    console.log('Step 1: Creating content types...\n');
     for (const [uid, definition] of Object.entries(contentTypes)) {
       const contentType = await createContentType(definition);
       createdContentTypes[uid] = contentType;
       console.log('');
     }
 
-    // Step 2: Create all entries
-    console.log('📝 Step 2: Creating entries...\n');
+    console.log('Step 2: Creating entries...\n');
     for (const [contentTypeUid, entries] of Object.entries(entriesData)) {
       console.log(`Creating entries for ${contentTypeUid}...`);
       createdEntries[contentTypeUid] = [];
       
-      // For singleton content types (hero_section, cta_section), only create first entry
       const entriesToCreate = (contentTypeUid === 'hero_section' || contentTypeUid === 'cta_section') 
         ? [entries[0]] 
         : entries;
@@ -689,22 +669,21 @@ async function main() {
         try {
           const entry = await createEntry(contentTypeUid, entryData);
           if (entry) {
-            console.log(`  ✅ Created: ${entryData.title || entryData.menu_label || entryData.section_title || entryData.company_name || 'Entry'}`);
+            console.log(`  Created: ${entryData.title || entryData.menu_label || entryData.section_title || entryData.company_name || 'Entry'}`);
             createdEntries[contentTypeUid].push(entry);
           }
         } catch (error) {
           if (error.message.includes('already exists') || error.message.includes('422')) {
-            console.log(`  ⚠️  Entry might already exist, skipping...`);
+            console.log(`  Entry might already exist, skipping...`);
           } else {
-            console.error(`  ❌ Failed to create entry:`, error.message);
+            console.error(`  Failed to create entry:`, error.message);
           }
         }
       }
       console.log('');
     }
 
-    // Step 3: Publish all entries
-    console.log('📤 Step 3: Publishing entries...\n');
+    console.log('Step 3: Publishing entries...\n');
     for (const [contentTypeUid, entries] of Object.entries(createdEntries)) {
       for (const entry of entries) {
         if (entry && entry.uid) {
@@ -713,14 +692,13 @@ async function main() {
       }
     }
 
-    // Summary
-    console.log('\n✅ Import completed successfully!');
-    console.log(`\n📊 Summary:`);
+    console.log('\nImport completed successfully!');
+    console.log(`\nSummary:`);
     console.log(`   Content Types Created: ${Object.keys(createdContentTypes).length}`);
     for (const [uid, entries] of Object.entries(createdEntries)) {
       console.log(`   ${uid}: ${entries.length} entries`);
     }
-    console.log('\n💡 Next steps:');
+    console.log('\nNext steps:');
     console.log('   1. Go to Contentstack and verify all content types and entries');
     console.log('   2. Add featured images to blog posts if needed');
     console.log('   3. Upload company logos if needed');
@@ -728,16 +706,14 @@ async function main() {
     console.log('   5. Refresh your website to see the new content');
 
   } catch (error) {
-    console.error('\n❌ Import failed:', error.message);
+    console.error('\nImport failed:', error.message);
     console.error(error.stack);
     process.exit(1);
   }
 }
 
-// Run if executed directly
 if (require.main === module) {
   main();
 }
 
 module.exports = { createContentType, createEntry, publishEntry };
-
