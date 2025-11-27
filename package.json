@@ -1,0 +1,24 @@
+{
+  "name": "contentcon-blog",
+  "version": "1.0.0",
+  "description": "ContentCon Blog - Modern content management website with Contentstack integration",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build required'",
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "contentstack",
+    "cms",
+    "headless-cms",
+    "blog"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-abhay/contentcon.git"
+  }
+}
+
